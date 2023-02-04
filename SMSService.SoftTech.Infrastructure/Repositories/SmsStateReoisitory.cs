@@ -2,15 +2,13 @@
 using SMSService.SoftTech.Data.Database;
 using SMSService.SoftTech.Infrastructure.Context;
 using SMSService.SoftTech.Infrastructure.Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SMSService.SoftTech.Infrastructure.Repositories
 {
-    internal class SmsStateReoisitory:ISmsStateReoisitory
+    internal class SmsStateReoisitory : ISmsStateReoisitory
     {
         DataContext _context;
         public SmsStateReoisitory(DataContext context)
