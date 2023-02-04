@@ -14,4 +14,8 @@
     <ProjectReference Include="..\SMSService.SoftTech.Infrastructure\SMSService.SoftTech.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Profiles\" />
+  </ItemGroup>
+
 </Project>
