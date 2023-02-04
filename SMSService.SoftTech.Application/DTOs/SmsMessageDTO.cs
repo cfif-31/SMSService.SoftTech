@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 namespace SMSService.SoftTech.Application.DTOs
 {
     public record SmsMessageDTO(
-            
+        long Id,
+        string MessageText,
+        DateTime SendTime,
+        string Phone,
+        string SenderName
     );
 }

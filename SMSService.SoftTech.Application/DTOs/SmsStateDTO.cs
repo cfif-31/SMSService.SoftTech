@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SMSService.SoftTech.Application.DTOs
 {
-    internal class SmsStateDTO
+    public record SmsStateDTO
     {
     }
 }
