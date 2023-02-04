@@ -13,7 +13,6 @@ namespace SMSService.SoftTech.Infrastructure.Repositories.Interfaces
         /// Add new message to database
         /// </summary>
         /// <param name="message">New message</param>
-        /// <returns></returns>
         Task AddMessage(SmsMessage message);
     }
 }
