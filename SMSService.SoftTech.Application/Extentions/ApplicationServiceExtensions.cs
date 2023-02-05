@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SMSService.SoftTech.Application.Profiles;
+using SMSService.SoftTech.Application.Services.Backgrounds;
 using SMSService.SoftTech.Application.Services.DataServices;
 using SMSService.SoftTech.Application.Services.DataServices.Interfaces;
 using SMSService.SoftTech.Infrastructure.Repositories.Interfaces;
@@ -18,12 +19,20 @@ namespace SMSService.SoftTech.Application.Extentions
         /// Registration Application module in DI
         /// </summary>
         /// <param name="services">Service collections</param>
-        public static void AddInfrastructure(this IServiceCollection services)
+        public static void AddApplication(this IServiceCollection services)
         {
             //Mapper
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
             //Data services
+            services.AddScoped<ISmsMessageService, SmsMessageService>();
+            services.AddScoped<ISmsStateService, SmsStateService>();
+
+            //Background
+            services.AddSingleton<UpdateQueueService>();
+            services.AddHostedService<UpdateStateBackgroundService>();
+
+            //Process services
             services.AddScoped<ISmsMessageService, SmsMessageService>();
             services.AddScoped<ISmsStateService, SmsStateService>();
         }

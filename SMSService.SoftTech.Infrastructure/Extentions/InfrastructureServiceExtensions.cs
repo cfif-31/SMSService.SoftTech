@@ -18,6 +18,7 @@ namespace SMSService.SoftTech.Infrastructure.Extentions
         {
             //Registration DbContext
             services.AddDbContext<DataContext>(options);
+
             //Registration repositories
             services.AddScoped<ISmsMessageRepository, SmsMessageRepository>();
             services.AddScoped<ISmsStateReoisitory, SmsStateReoisitory>();
