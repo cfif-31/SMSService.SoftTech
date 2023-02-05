@@ -12,7 +12,7 @@ namespace SMSService.SoftTech.Data.Database
         public long Id { get; set; }
         public long SmsMessageId { get; set; }
         public EMessageState State { get; set; }
-        public DateTime SetDate { get; set; }
+        public DateTime SetDate { get; set; } = DateTime.UtcNow;
         public virtual SmsMessage SmsMessage { get; set; }
     }
 }

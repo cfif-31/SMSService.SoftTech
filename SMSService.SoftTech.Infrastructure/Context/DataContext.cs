@@ -25,7 +25,7 @@ namespace SMSService.SoftTech.Infrastructure.Context
                 smsMessage.HasKey(m => m.Id);
                 smsMessage.Property(m=>m.MessageText).IsRequired().HasMaxLength(2048);
                 smsMessage.Property(m=>m.Phone).IsRequired().HasMaxLength(20);                
-                smsMessage.Property(m=>m.SenderName).IsRequired().HasMaxLength(32);                
+                smsMessage.Property(m=>m.SenderName).HasMaxLength(32);                
             });
 
             modelBuilder.Entity<SmsState>(smsState =>

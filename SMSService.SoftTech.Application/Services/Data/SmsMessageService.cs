@@ -4,6 +4,7 @@ using SMSService.SoftTech.Application.Services.DataServices.Interfaces;
 using SMSService.SoftTech.Data.Database;
 using SMSService.SoftTech.Infrastructure.Repositories.Interfaces;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SMSService.SoftTech.Application.Services.DataServices
@@ -18,15 +19,16 @@ namespace SMSService.SoftTech.Application.Services.DataServices
             _messageRepository = messageRepository;
         }
 
-        public Task AddMessage(SmsMessageDTO messageDTO)
+        public async Task AddMessage(SmsMessageDTO messageDTO, CancellationToken cancellation)
         {
             SmsMessage message = _mapper.Map<SmsMessage>(messageDTO);
-            return _messageRepository.AddMessage(message);
+            await _messageRepository.AddMessage(message, cancellation);
+            messageDTO.Id = message.Id;
         }
 
-        public async Task<SmsMessageDTO> SelectMessage(long messageId)
+        public async Task<SmsMessageDTO> SelectMessage(long messageId, CancellationToken cancellation)
         {
-            SmsMessage message = await _messageRepository.SelectMessage(messageId);
+            SmsMessage message = await _messageRepository.SelectMessage(messageId, cancellation);
             return _mapper.Map<SmsMessageDTO>(message);
         }
     }

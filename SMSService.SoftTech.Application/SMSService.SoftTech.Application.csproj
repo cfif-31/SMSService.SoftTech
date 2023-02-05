@@ -7,15 +7,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SMSService.SoftTech.Data\SMSService.SoftTech.Data.csproj" />
     <ProjectReference Include="..\SMSService.SoftTech.Infrastructure\SMSService.SoftTech.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Backgrounds\" />
   </ItemGroup>
 
 </Project>

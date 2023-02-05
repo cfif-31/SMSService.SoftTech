@@ -14,7 +14,8 @@ namespace SMSService.SoftTech.Application.Profiles
             //SmsMessage <=> SmsMessageDTO
             CreateMap<SmsMessage, SmsMessageDTO>();
             CreateMap<SmsMessageDTO, SmsMessage>()
-                .ForMember(m=>m.StateHistory, opt=>opt.Ignore());
+                .ForMember(m=>m.StateHistory, opt=>opt.Ignore())
+                .ForMember(m=>m.SendTime, opt=>opt.Ignore());
 
             //SmsState <=> SmsStateDTO
             CreateMap<SmsState, SmsStateDTO>().ReverseMap();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SMSService.SoftTech.Application.Services.ProcessServices.Interfaces
 {
-    internal interface ISendMessageService
+    public interface ISendMessageService
     {
         Task SendMessage(SmsMessageDTO smsMessage);
     }

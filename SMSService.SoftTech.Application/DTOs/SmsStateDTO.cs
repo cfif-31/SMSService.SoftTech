@@ -5,10 +5,12 @@ using System.Collections.Generic;
 namespace SMSService.SoftTech.Application.DTOs
 {
     public record SmsStateDTO(
-        long Id,
         long SmsMessageId,
         EMessageState State,
         DateTime SetDate,
         List<SmsMessageDTO> SmsMessages = null
-    );
+    )
+    {
+        public long Id { get; set; }
+    }
 }
