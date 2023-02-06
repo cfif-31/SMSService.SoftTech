@@ -4,6 +4,8 @@ using SMSService.SoftTech.Application.Services.DataServices.Interfaces;
 using SMSService.SoftTech.Data.Database;
 using SMSService.SoftTech.Infrastructure.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,17 +21,24 @@ namespace SMSService.SoftTech.Application.Services.DataServices
             _messageRepository = messageRepository;
         }
 
-        public async Task AddMessage(SmsMessageDTO messageDTO, CancellationToken cancellation)
+        public async Task<SmsMessageDTO> AddMessage(SmsMessageDTO messageDTO, CancellationToken cancellation)
         {
             SmsMessage message = _mapper.Map<SmsMessage>(messageDTO);
             await _messageRepository.AddMessage(message, cancellation);
-            messageDTO.Id = message.Id;
+            return _mapper.Map<SmsMessageDTO>(message);
         }
 
-        public async Task<SmsMessageDTO> SelectMessage(long messageId, CancellationToken cancellation)
+        public async IAsyncEnumerable<SmsMessageDTO> SelectLastStatesWithMessages(DateTime utcTime,
+            [EnumeratorCancellation] CancellationToken cancellation = default)
         {
-            SmsMessage message = await _messageRepository.SelectMessage(messageId, cancellation);
-            return _mapper.Map<SmsMessageDTO>(message);
+            await foreach (SmsMessage data in _messageRepository.SelectMessageWithStates(utcTime).WithCancellation(cancellation))
+                yield return _mapper.Map<SmsMessageDTO>(data);
+        }
+
+        public async Task<SmsMessageDTO> SelectOneMessage(long messageId, CancellationToken cancellation)
+        {
+            SmsMessage data = await _messageRepository.SelectOneMessage(messageId);
+            return _mapper.Map<SmsMessageDTO>(data);
         }
     }
 }

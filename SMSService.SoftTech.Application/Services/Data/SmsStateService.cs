@@ -21,22 +21,16 @@ namespace SMSService.SoftTech.Application.Services.DataServices
             _stateRepository = stateReoisitory;
         }
 
-        public async Task AddMessageState(SmsStateDTO smsState, CancellationToken cancellation)
+        public async Task<SmsStateDTO> AddMessageState(SmsStateDTO smsState, CancellationToken cancellation)
         {
             SmsState state = _mapper.Map<SmsState>(smsState);
             await _stateRepository.AddMessageState(state, cancellation);
-            smsState.Id = state.Id;
+            return _mapper.Map<SmsStateDTO>(state);
         }
 
-        public Task<long[]> SelectAllMessageIDsWithState(EMessageState messageState, CancellationToken cancellation = default)
+        public Task<long[]> SelectAllMessageIDsByState(EMessageState messageState, CancellationToken cancellation)
         {
             return _stateRepository.SelectAllMessageIDsWithState(messageState, cancellation);
-        }
-
-        public async IAsyncEnumerable<SmsStateDTO> SelectLastStatesWithMessages([EnumeratorCancellation] CancellationToken cancellation)
-        {
-            await foreach (SmsState data in _stateRepository.SelectLastStatesWithMessages().WithCancellation(cancellation))
-                yield return _mapper.Map<SmsStateDTO>(data);
         }
     }
 }

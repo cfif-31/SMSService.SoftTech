@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SMSService.SoftTech.Application.DTOs
@@ -10,10 +11,7 @@ namespace SMSService.SoftTech.Application.DTOs
         string Phone,
         [MinLength(3), MaxLength(32)]
         string SenderName,
-        DateTime SendTime,
-        SmsMessageDTO SmsMessage = null
-    )
-    {
-        public long Id { get; set; }
-    }
+        long Id = 0,
+        List<SmsStateDTO> StateHistory = null
+    );
 }

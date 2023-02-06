@@ -31,6 +31,8 @@ namespace SMSService.SoftTech.Infrastructure.Context
             modelBuilder.Entity<SmsState>(smsState =>
             {
                 smsState.HasKey(m => m.Id);
+                smsState.HasIndex(m => m.SmsMessageId);
+                smsState.HasIndex(m => m.SetDate);
                 smsState.HasOne(h => h.SmsMessage).WithMany(m => m.StateHistory)
                     .HasForeignKey(h => h.SmsMessageId);
             });

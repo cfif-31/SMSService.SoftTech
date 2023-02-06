@@ -13,19 +13,15 @@ namespace SMSService.SoftTech.Application.Services.DataServices.Interfaces
     internal interface ISmsStateService
     {
         /// <summary>
-        /// Get all state with messages and map to DTO
-        /// </summary>
-        IAsyncEnumerable<SmsStateDTO> SelectLastStatesWithMessages(CancellationToken cancellation = default);
-        /// <summary>
         /// Get all states with messages where last state is message state
         /// </summary>
         /// <param name="messageState">last message state</param>
         /// <returns></returns>
-        Task<long[]> SelectAllMessageIDsWithState(EMessageState messageState, CancellationToken cancellation = default);
+        Task<long[]> SelectAllMessageIDsByState(EMessageState messageState, CancellationToken cancellation = default);
         /// <summary>
         /// Set new message state from DTO
         /// </summary>
         /// <param name="smsState"><new message state</param>
-        Task AddMessageState(SmsStateDTO smsState, CancellationToken cancellation = default);
+        Task<SmsStateDTO> AddMessageState(SmsStateDTO smsState, CancellationToken cancellation = default);
     }
 }

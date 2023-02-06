@@ -33,20 +33,13 @@ namespace SMSService.SoftTech.Application.Services.Backgrounds
         /// </summary>
         /// <param name="cancellationToken">cancelation tokken</param>
         /// <returns>Array of message IDs for updating state</returns>
-        private async Task<long[]> LoadMessageList(CancellationToken cancellationToken)
+        private async Task LoadMessageTasks(CancellationToken cancellationToken)
         {
             using var scope = _serviceProvider.CreateScope();
             ISmsStateService smsState = scope.ServiceProvider.GetService<ISmsStateService>();
-            return await smsState.SelectAllMessageIDsWithState(EMessageState.Submited, cancellationToken);
-        }
-
-        public override async Task StartAsync(CancellationToken cancellationToken)
-        {
-            long[] IDs = await LoadMessageList(cancellationToken);
+            long[] IDs = await smsState.SelectAllMessageIDsByState(EMessageState.Submited, cancellationToken);
             foreach (long id in IDs)
                 _updateQueue.MessageIdsTasks.Enqueue(id);
-
-            await base.StartAsync(cancellationToken);
         }
 
         /// <summary>
@@ -63,7 +56,7 @@ namespace SMSService.SoftTech.Application.Services.Backgrounds
                 ISmsStateService smsState = scope.ServiceProvider.GetService<ISmsStateService>();
 
                 //Mock
-                EMessageState state = (EMessageState)_random.Next((int)EMessageState.Delivered, (int)(EMessageState.Error + 1));
+                EMessageState state = (EMessageState)_random.Next((int)EMessageState.Error, (int)(EMessageState.Delivered + 1));
                 //Mock server delay 0.3 to 10 seccond
                 await Task.Delay(_random.Next(300, 10000), cancellation);
 
@@ -78,6 +71,7 @@ namespace SMSService.SoftTech.Application.Services.Backgrounds
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            await LoadMessageTasks(stoppingToken);
             while (!stoppingToken.IsCancellationRequested)
             {
                 if (_updateQueue.MessageIdsTasks.TryDequeue(out long id))

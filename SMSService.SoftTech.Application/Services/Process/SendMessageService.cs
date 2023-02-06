@@ -2,6 +2,7 @@
 using SMSService.SoftTech.Application.Services.Backgrounds;
 using SMSService.SoftTech.Application.Services.DataServices.Interfaces;
 using SMSService.SoftTech.Application.Services.ProcessServices.Interfaces;
+using SMSService.SoftTech.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +27,12 @@ namespace SMSService.SoftTech.Application.Services.ProcessServices
         public async Task SendMessage(SmsMessageDTO smsMessage)
         {
             //Add sms to database
-            await _smsMessageService.AddMessage(smsMessage);
+            var addedMessage = await _smsMessageService.AddMessage(smsMessage);
             //Add sended state to database
-            SmsStateDTO smsState = new(smsMessage.Id, Data.Enums.EMessageState.Submited, DateTime.UtcNow);
+            SmsStateDTO smsState = new(addedMessage.Id, EMessageState.Submited, DateTime.UtcNow);
             await _smsStateService.AddMessageState(smsState);
             //Add message to queue
-            _updateQueueService.MessageIdsTasks.Enqueue(smsMessage.Id);
+            _updateQueueService.MessageIdsTasks.Enqueue(addedMessage.Id);
         }
     }
 }

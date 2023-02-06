@@ -5,8 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 using SMSService.SoftTech.Application.Extentions;
 using SMSService.SoftTech.Infrastructure.Extentions;
+using System.Text.Json.Serialization;
 
 namespace SMSService.SoftTech
 {
@@ -29,7 +31,8 @@ namespace SMSService.SoftTech
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SMSService.SoftTech", Version = "v1" });
             });
 
-            services.AddInfrastructure(db => db.UseNpgsql(Configuration.GetConnectionString("NPGSqlConnection")));
+            services.AddInfrastructure(db => db.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .UseNpgsql(Configuration.GetConnectionString("NPGSqlConnection")));
             services.AddApplication();
         }
 
@@ -44,9 +47,7 @@ namespace SMSService.SoftTech
             }
 
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

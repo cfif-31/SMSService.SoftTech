@@ -24,20 +24,11 @@ namespace SMSService.SoftTech.Infrastructure.Repositories
             return _context.SaveChangesAsync(cancellation);
         }
 
-        public IAsyncEnumerable<SmsState> SelectLastStatesWithMessages()
-        {
-            return _context.SmsStates.Include(s => s.SmsMessage).GroupBy(s => s.SmsMessageId)
-                .Select(gs => gs.OrderByDescending(gi => gi.SetDate).FirstOrDefault())
-                .AsAsyncEnumerable();
-        }
-
         public Task<long[]> SelectAllMessageIDsWithState(EMessageState messageState, CancellationToken cancellation)
         {
-            return _context.SmsStates.Include(s => s.SmsMessage).GroupBy(s => s.SmsMessageId)
-                .Select(gs => gs.OrderByDescending(gi => gi.SetDate).FirstOrDefault())
-                .Where(s => s.State == messageState)
-                .Select(s => s.SmsMessageId)
-                .ToArrayAsync(cancellation);
+            return _context.SmsMessages
+                .Where(m => m.StateHistory.OrderByDescending(s => s.SetDate).FirstOrDefault().State == messageState)
+                .Select(m => m.Id).ToArrayAsync();
         }
     }
 }

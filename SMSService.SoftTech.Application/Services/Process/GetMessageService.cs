@@ -1,8 +1,12 @@
 ﻿using SMSService.SoftTech.Application.DTOs;
+using SMSService.SoftTech.Application.Services.DataServices;
 using SMSService.SoftTech.Application.Services.DataServices.Interfaces;
 using SMSService.SoftTech.Application.Services.Process.Interfaces;
+using SMSService.SoftTech.Data.Database;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SMSService.SoftTech.Application.Services.Process
@@ -10,20 +14,19 @@ namespace SMSService.SoftTech.Application.Services.Process
     internal class GetMessageService : IGetMessageService
     {
         private readonly ISmsMessageService _messageService;
-        private readonly ISmsStateService _stateService;
-        public GetMessageService(ISmsMessageService messageService, ISmsStateService stateService)
+        public GetMessageService(ISmsMessageService messageService)
         {
             _messageService = messageService;
-            _stateService = stateService;
-        }
-        public IAsyncEnumerable<SmsStateDTO> GetAllMessages()
-        {
-            return _stateService.SelectLastStatesWithMessages();
         }
 
-        public Task<SmsMessageDTO> GetMessage(long id)
+        public Task<SmsMessageDTO> GetOneMessage(long messageId)
         {
-            return _messageService.SelectMessage(id);
+            return _messageService.SelectOneMessage(messageId);
+        }
+
+        public IAsyncEnumerable<SmsMessageDTO> SelectLastStatesWithMessages(DateTime utcTime)
+        {
+            return _messageService.SelectLastStatesWithMessages(utcTime);
         }
     }
 }

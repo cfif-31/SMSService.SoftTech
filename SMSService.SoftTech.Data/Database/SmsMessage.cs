@@ -11,7 +11,6 @@ namespace SMSService.SoftTech.Data.Database
     {
         public long Id { get; set; }
         public string MessageText { get; set; }
-        public DateTime SendTime { get; set; } = DateTime.UtcNow;
         public string Phone { get; set; }
         public string SenderName { get; set; }
         public ICollection<SmsState> StateHistory { get; set; }

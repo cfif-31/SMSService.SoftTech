@@ -4,6 +4,10 @@ using SMSService.SoftTech.Application.Profiles;
 using SMSService.SoftTech.Application.Services.Backgrounds;
 using SMSService.SoftTech.Application.Services.DataServices;
 using SMSService.SoftTech.Application.Services.DataServices.Interfaces;
+using SMSService.SoftTech.Application.Services.Process;
+using SMSService.SoftTech.Application.Services.Process.Interfaces;
+using SMSService.SoftTech.Application.Services.ProcessServices;
+using SMSService.SoftTech.Application.Services.ProcessServices.Interfaces;
 using SMSService.SoftTech.Infrastructure.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -33,8 +37,8 @@ namespace SMSService.SoftTech.Application.Extentions
             services.AddHostedService<UpdateStateBackgroundService>();
 
             //Process services
-            services.AddScoped<ISmsMessageService, SmsMessageService>();
-            services.AddScoped<ISmsStateService, SmsStateService>();
+            services.AddScoped<IGetMessageService, GetMessageService>();
+            services.AddScoped<ISendMessageService, SendMessageService>();
         }
     }
 }
