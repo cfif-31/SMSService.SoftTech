@@ -9,6 +9,5 @@ namespace SMSService.SoftTech.Application.DTOs
         EMessageState State,
         DateTime SetDate,
         long Id = 0
-        //SmsMessageDTO SmsMessage = null
     );
 }

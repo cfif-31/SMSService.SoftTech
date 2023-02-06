@@ -17,7 +17,7 @@ namespace SMSService.SoftTech.Application.Services.DataServices.Interfaces
         /// Add DTO message to database
         /// </summary>
         /// <param name="message">New message</param>
-        Task<SmsMessageDTO> AddMessage(SmsMessageDTO messageDTO, CancellationToken cancellation = default);
+        Task<SmsMessageDTO> AddMessage(SmsMessageDTO messageDTO, SmsStateDTO[] stateDTOs = default, CancellationToken cancellation = default);
         /// <summary>
         /// Get message with state history by <paramref name="messageId"/>
         /// </summary>

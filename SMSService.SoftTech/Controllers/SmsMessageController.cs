@@ -26,7 +26,7 @@ namespace SMSService.SoftTech.API.Controllers
         }
 
         [HttpPost]
-        public Task SendSmsMessage(SmsMessageDTO smsMessage, [FromServices] ISendMessageService messageService)
+        public Task<SmsMessageDTO> SendSmsMessage(SmsMessageDTO smsMessage, [FromServices] ISendMessageService messageService)
         {
             return messageService.SendMessage(smsMessage);
         }

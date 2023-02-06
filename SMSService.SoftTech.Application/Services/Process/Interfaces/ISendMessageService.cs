@@ -14,6 +14,6 @@ namespace SMSService.SoftTech.Application.Services.ProcessServices.Interfaces
         /// </summary>
         /// <param name="smsMessage">message</param>
         /// <returns></returns>
-        Task SendMessage(SmsMessageDTO smsMessage);
+        Task<SmsMessageDTO> SendMessage(SmsMessageDTO smsMessage);
     }
 }

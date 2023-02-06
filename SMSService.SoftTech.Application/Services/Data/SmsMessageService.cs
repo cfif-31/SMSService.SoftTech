@@ -5,6 +5,7 @@ using SMSService.SoftTech.Data.Database;
 using SMSService.SoftTech.Infrastructure.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,9 +22,12 @@ namespace SMSService.SoftTech.Application.Services.DataServices
             _messageRepository = messageRepository;
         }
 
-        public async Task<SmsMessageDTO> AddMessage(SmsMessageDTO messageDTO, CancellationToken cancellation)
+        public async Task<SmsMessageDTO> AddMessage(SmsMessageDTO messageDTO, SmsStateDTO[] stateDTOs, CancellationToken cancellation)
         {
             SmsMessage message = _mapper.Map<SmsMessage>(messageDTO);
+            foreach (SmsStateDTO state in stateDTOs ?? Enumerable.Empty<SmsStateDTO>())
+                message.StateHistory.Add(_mapper.Map<SmsState>(state));
+
             await _messageRepository.AddMessage(message, cancellation);
             return _mapper.Map<SmsMessageDTO>(message);
         }

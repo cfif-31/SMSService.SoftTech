@@ -24,15 +24,15 @@ namespace SMSService.SoftTech.Application.Services.ProcessServices
             _updateQueueService = updateQueue;
         }
 
-        public async Task SendMessage(SmsMessageDTO smsMessage)
+        public async Task<SmsMessageDTO> SendMessage(SmsMessageDTO smsMessage)
         {
+            //Add sended state to sms
+            var state = new SmsStateDTO(0, EMessageState.Submited, DateTime.UtcNow);
             //Add sms to database
-            var addedMessage = await _smsMessageService.AddMessage(smsMessage);
-            //Add sended state to database
-            SmsStateDTO smsState = new(addedMessage.Id, EMessageState.Submited, DateTime.UtcNow);
-            await _smsStateService.AddMessageState(smsState);
+            var addedMessage = await _smsMessageService.AddMessage(smsMessage, new SmsStateDTO[] { state });
             //Add message to queue
             _updateQueueService.MessageIdsTasks.Enqueue(addedMessage.Id);
+            return addedMessage;
         }
     }
 }
