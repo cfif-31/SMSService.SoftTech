@@ -7,7 +7,7 @@ namespace SMSService.SoftTech.Application.DTOs
     public record SmsMessageDTO(
         [Required, MinLength(5), MaxLength(2048)]
         string MessageText,
-        [Required, MinLength(8), MaxLength(20)]
+        [Required, MinLength(8), MaxLength(20), Phone]
         string Phone,
         [MinLength(3), MaxLength(32)]
         string SenderName,
