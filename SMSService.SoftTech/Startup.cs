@@ -20,6 +20,7 @@ namespace SMSService.SoftTech
         }
 
         public IConfiguration Configuration { get; }
+        private const string corsPoliticsName = "corsAllPolitic";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -31,6 +32,15 @@ namespace SMSService.SoftTech
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SMSService.SoftTech", Version = "v1" });
             });
+
+            services.AddCors();
+            services.AddCors(p => p.AddPolicy(corsPoliticsName, builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("date");
+            }));
 
             services.AddInfrastructure(db => db.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .UseNpgsql(Configuration.GetConnectionString("NPGSqlConnection")));
@@ -46,6 +56,8 @@ namespace SMSService.SoftTech
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SMSService.SoftTech v1"));
             }
+
+            app.UseCors(corsPoliticsName);
 
             app.UseRouting();
             app.UseAuthorization();
