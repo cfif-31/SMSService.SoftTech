@@ -37,7 +37,7 @@ namespace SMSService.SoftTech.Application.Services.Backgrounds
         {
             using var scope = _serviceProvider.CreateScope();
             ISmsStateService smsState = scope.ServiceProvider.GetService<ISmsStateService>();
-            long[] IDs = await smsState.SelectAllMessageIDsByState(EMessageState.Submited, cancellationToken);
+            long[] IDs = await smsState.SelectAllMessageIDsByState(EMessageState.Submitted, cancellationToken);
             foreach (long id in IDs)
                 _updateQueue.MessageIdsTasks.Enqueue(id);
         }

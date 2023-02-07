@@ -8,7 +8,7 @@ namespace SMSService.SoftTech.Data.Enums
 {
     public enum EMessageState:byte
     {
-        Submited = 0,
+        Submitted = 0,
         Error = 1,
         Delivered = 2
     }

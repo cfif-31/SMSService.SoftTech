@@ -27,7 +27,7 @@ namespace SMSService.SoftTech.Application.Services.ProcessServices
         public async Task<SmsMessageDTO> SendMessage(SmsMessageDTO smsMessage)
         {
             //Add sended state to sms
-            var state = new SmsStateDTO(0, EMessageState.Submited, DateTime.UtcNow);
+            var state = new SmsStateDTO(0, EMessageState.Submitted, DateTime.UtcNow);
             //Add sms to database
             var addedMessage = await _smsMessageService.AddMessage(smsMessage, new SmsStateDTO[] { state });
             //Add message to queue
