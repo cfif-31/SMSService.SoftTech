@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using SMSService.SoftTech.API.Middleware;
 using SMSService.SoftTech.Application.Extentions;
 using SMSService.SoftTech.Infrastructure.Extentions;
 using System.Text.Json.Serialization;
@@ -61,6 +62,7 @@ namespace SMSService.SoftTech
 
             app.UseRouting();
             app.UseAuthorization();
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
