@@ -24,7 +24,8 @@ namespace SMSService.SoftTech.Infrastructure.Repositories
         }
         public IAsyncEnumerable<SmsMessage> SelectMessageWithStates(DateTime utcTime)
         {
-            return _context.SmsMessages.Include(m => m.StateHistory.OrderByDescending(s => s.SetDate))
+            return _context.SmsMessages.OrderByDescending(m=>m.Id)
+                    .Include(m => m.StateHistory.OrderByDescending(s => s.SetDate))
                     .Where(m=>m.StateHistory.FirstOrDefault().SetDate >= utcTime)
                     .AsAsyncEnumerable();
         }
