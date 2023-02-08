@@ -42,6 +42,7 @@ namespace SMSService.SoftTech
                     .AllowAnyHeader()
                     .WithExposedHeaders("date");
             }));
+            services.AddHttpContextAccessor();
 
             services.AddInfrastructure(db => db.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .UseNpgsql(Configuration.GetConnectionString("NPGSqlConnection")));
@@ -59,9 +60,11 @@ namespace SMSService.SoftTech
             }
 
             app.UseCors(corsPoliticsName);
+            app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseAuthorization();
+
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseEndpoints(endpoints =>
             {
