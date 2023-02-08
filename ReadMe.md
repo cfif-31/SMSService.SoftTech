@@ -1,5 +1,7 @@
 # SMSService.SoftTech
 
+[Published version](https://smsmessage.cfif31.ru/api/swagger/index.html "published url")
+
 ### /api/SmsMessage
 
 #### GET
